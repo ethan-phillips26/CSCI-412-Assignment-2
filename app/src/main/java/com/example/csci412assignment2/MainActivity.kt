@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.csci412assignment2.ui.theme.CSCI412Assignment2Theme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Button
@@ -67,6 +66,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             Button(onClick = { onClickImplicit(context) }) {
                 Text("Start Activity Implicitly")
             }
+
+            Button(onClick = { onClickImage(context) }) {
+                Text("View Image Activity")
+            }
         }
     }
 }
@@ -80,6 +83,11 @@ fun onClickImplicit(context: Context) {
     // go to the second activity implicitly
     context.startActivity(Intent("com.example.csci412assignment2.ACTION_VIEW_SECOND"))
 }
+
+fun onClickImage(context: Context) {
+    context.startActivity(Intent(context, ThirdActivity::class.java))
+}
+
 
 @Preview(showBackground = true)
 @Composable
