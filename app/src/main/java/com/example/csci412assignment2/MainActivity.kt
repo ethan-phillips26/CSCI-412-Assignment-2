@@ -20,12 +20,20 @@ import com.example.csci412assignment2.ui.theme.CSCI412Assignment2Theme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Button
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (checkSelfPermission("com.example.csci412assignment2.MSE412")
+            != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(arrayOf("com.example.csci412assignment2.MSE412"), 1)
+        }
         enableEdgeToEdge()
         setContent {
             CSCI412Assignment2Theme {
@@ -75,13 +83,24 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 fun onClickExplicit(context: Context) {
-    // Go to the second activity explicitly
-    context.startActivity(Intent(context, SecondActivity::class.java))
+    if (ContextCompat.checkSelfPermission(context, "com.example.csci412assignment2.MSE412")
+        != PackageManager.PERMISSION_GRANTED)
+    {
+        ActivityCompat.requestPermissions(context as ComponentActivity, arrayOf("com.example.csci412assignment2.MSE412"), 1)
+    } else {
+        // Go to the second activity explicitly
+        context.startActivity(Intent(context, SecondActivity::class.java))
+    }
 }
 
 fun onClickImplicit(context: Context) {
-    // go to the second activity implicitly
-    context.startActivity(Intent("com.example.csci412assignment2.ACTION_VIEW_SECOND"))
+    if (ContextCompat.checkSelfPermission(context, "com.example.csci412assignment2.MSE412")
+        != PackageManager.PERMISSION_GRANTED)
+    {
+        ActivityCompat.requestPermissions(context as ComponentActivity, arrayOf("com.example.csci412assignment2.MSE412"), 1)
+    } else {
+        // go to the second activity implicitly
+        context.startActivity(Intent("com.example.csci412assignment2.ACTION_VIEW_SECOND"))    }
 }
 
 fun onClickImage(context: Context) {
